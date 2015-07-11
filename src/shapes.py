@@ -40,20 +40,22 @@ class Figure:
         self.x_pos += add_x
         self.y_pos += add_y
 
-class Square(Figure):
-    def __init__(self, x_pos=0, y_pos=0, side=3):
+class Rectangle(Figure):
+    def __init__(self, x_pos=0, y_pos=0, side_x=3, side_y=3):
         super().__init__(x_pos, y_pos)
-        self.side = side
+        self.side_x = side_x
+        self.side_y = side_y
         self.dot = 'x'
 
     def grow(self, side_inc = 1):
-        self.side += side_inc
+        self.side_x += side_inc
+        self.side_y += side_inc
 
     def _update_sklt(self):
         self.sklt = [Point(self.x_pos,
                            self.y_pos),
-                     Point(self.x_pos + self.side,
-                           self.y_pos + self.side)]
+                     Point(self.x_pos + self.side_x,
+                           self.y_pos + self.side_y)]
 
     def draw(self, grid):
         self._update_sklt()
