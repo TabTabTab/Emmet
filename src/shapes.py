@@ -41,11 +41,11 @@ class Figure:
         self.y_pos += add_y
 
 class Rectangle(Figure):
-    def __init__(self, x_pos=0, y_pos=0, side_x=3, side_y=3):
+    def __init__(self, x_pos=0, y_pos=0, side_x=3, side_y=3, dot='x'):
         super().__init__(x_pos, y_pos)
         self.side_x = side_x
         self.side_y = side_y
-        self.dot = 'x'
+        self.dot = dot
 
     def grow(self, side_inc = 1):
         self.side_x += side_inc
@@ -71,10 +71,10 @@ class Rectangle(Figure):
         return grid
 
 class Circle(Figure):
-    def __init__(self, pos_x=0, pos_y=0, radius=3):
+    def __init__(self, pos_x=0, pos_y=0, radius=3, dot='+'):
         super().__init__(pos_x, pos_y)
         self.radius = radius
-        self.dot = '+'
+        self.dot = dot
 
     def grow(self, rad_inc = 1):
         self.radius += rad_inc
@@ -106,10 +106,15 @@ class Circle(Figure):
         y_fact = 1
         x_fact = 1
         if rad_x < rad_y:
-            x_fact = rad_y / rad_x
-            rad = rad_y
+            try:
+                x_fact = rad_y / rad_x
+            except ZeroDivisionError:
+                rad = rad_y
         else:
-            y_fact = rad_x / rad_y
+            try:
+                y_fact = rad_x / rad_y
+            except ZeroDivisionError:
+                pass
             rad = rad_x
         cx = luc[0] + rad_x
         cy = luc[1] + rad_y

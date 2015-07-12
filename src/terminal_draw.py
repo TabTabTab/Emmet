@@ -1,8 +1,10 @@
 from shutil import get_terminal_size
 import time
+import os
+import sys
 class TerminalDraw:
 
-    def __init__(self, background='-', frame='o'):
+    def __init__(self, background=' ', frame='o'):
         self.background = background
         self.frame = frame
         self._height = None
@@ -17,6 +19,8 @@ class TerminalDraw:
         self.figures.append(figure)
 
     def animate(self, fps=2, tot_time=10):
+        os.system('clear')
+        os.system('setterm -cursor off')
         sleep_time = 1.0/fps
         n_sleeps = int(tot_time/sleep_time)
         for i in range(0, n_sleeps):
@@ -24,6 +28,7 @@ class TerminalDraw:
             for fig in self.figures:
                 fig.static_move()
             time.sleep(sleep_time)
+        os.system('setterm -cursor on')
 
     def _draw_figs(self, grid):
         for figure in self.figures:
@@ -43,6 +48,6 @@ class TerminalDraw:
             grid.append(row)
         grid.append(frame_row)
         grid = self._draw_figs(grid)
-        for row in grid:
-            print("".join(row))
-
+        g = "\n".join(["".join(row) for row in grid])
+        sys.stdout.write(g)
+        sys.stdout.flush()
